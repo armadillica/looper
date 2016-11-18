@@ -6,7 +6,7 @@ Looper is a flexible subscription management system, designed after real-life sc
 
 * Multple currencies
 * Location detection for currency selection
-* Multiple payment methods (via gateways such as Braintree, Stripe, etc)
+* Multiple payment methods (via backends such as Braintree, Stripe, etc)
 * Recurring and manual (advance) payments
 * Up and downgrades (subscription add-ons)
 * VAT support
@@ -176,3 +176,108 @@ that is set to auto-renew.
             'valid_properties': True,
         }
     }
+
+### Subscription plans
+The blueprints used to configure and create an actual subscription. Once a subscription is created,
+it can be edited, and it only keeps a symbolic reference with its original plan.
+This way the user is able to switch from automatic to manual payments, to change backend and so on.
+
+    subscription_plans_schema = {
+        'name': {
+            'type': 'string',
+            'required': True,
+            'unique': True
+        },
+        'amount_recurring': {
+            'type': 'integer',
+            'required': True,
+            'min': 0,
+            'default': 0,
+        },
+        'amount_signup': {
+            'type': 'integer',
+            'required': True,
+            'min': 0,
+            'default': 0,
+        },
+        'interval': {
+            'type': 'string',
+            'required': True,
+            'allowed': [
+                'weekly',
+                'monthly',
+                'yearly'
+            ]
+        },
+        'currency': {
+            'type': 'string',
+            'required': True,
+            'allowed': [
+                'EUR',
+                'USD',
+                'BTC',
+            ]
+        },
+        'renewal': {
+            'type': 'string',
+            'required': True,
+            'allowed': [
+                'manual',
+                'automatic',
+            ]
+        },
+        'is_active': {
+            'type': 'boolean',
+            'default': True
+            },
+        'backend': {
+            'type': 'string',
+            'required': True,
+            'allowed': [
+                'braintree',
+                'stripe',
+                'local', # Only allow manual payment, only allow wire-transfers
+            ]
+        },
+        'backend_api_reference': {
+            'type': 'string', # Only needed for certain backends
+        }
+    }
+
+
+### Subscriptions
+The actual subscription, tied to a user. Ideally we try to assign a subscription to a user only once
+and we keep editing it until he cancels it. Even when canceled, a subscription may be restored.
+This might be incompatible with some backends, so we need to keep track of changes in that regard
+(in particular for the backend_api_refenrece parameter).
+
+    subscription_schema = {
+        'status': {
+            'type': 'string',
+            'required': True,
+            'allowed': [
+                'active',
+                'pending',
+                'canceled',
+                'suspended',
+                'expired',
+            ],
+        },
+        'user': {
+            'type': 'objectid',
+            'data_relation': {
+                'resource': 'users',
+                'field': '_id',
+                'embeddable': True
+            },
+        },
+        'backend': {
+            'type': 'string',
+            'required': True,
+            'allowed': [
+                'braintree',
+                'stripe',
+                'local', # Only allow manual payment, only allow wire-transfers
+            ]
+        },
+    } 
