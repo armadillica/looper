@@ -20,7 +20,7 @@ cultures have different expectations when it comes to subscription systems.
 
 Looper establishes the concept of *balance*, which is the financial status of a customer.
 The balance can be affected by debit or credit transactions, which can be performed by the
-cusomer or by the system itself. 
+customer or by the system itself.
 
 ## Model schemas
 
