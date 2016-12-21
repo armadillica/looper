@@ -4,12 +4,14 @@ Looper is a flexible subscription management system, designed after real-life sc
 
 ## Features
 
-* Multple currencies
+* Multiple currencies
 * Location detection for currency selection
 * Multiple payment methods (via backends such as Braintree, Stripe, etc)
 * Recurring and manual (advance) payments
 * Up and downgrades (subscription add-ons)
 * VAT support
+* Coupons
+* Gifts
 * Invoicing
 * Reporting tools (sales, customers) 
 
