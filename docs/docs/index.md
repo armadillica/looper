@@ -17,8 +17,8 @@ Looper is a flexible subscription management system, designed after real-life sc
 
 ## Design
 
-Give freedom to the customer to pick the desired payment solutions. Different countries and
-cultures have different expectations when it comes to subscription systems.
+Our goal is to give freedom to the customer to pick the desired payment solutions. Different 
+countries and cultures have different expectations when it comes to subscription systems.
 
 Looper establishes the concept of *Balance*, which is the financial status of a customer. The 
 balance can be affected by debit or credit transactions, which can be performed by the
